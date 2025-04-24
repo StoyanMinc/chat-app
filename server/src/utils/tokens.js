@@ -27,3 +27,11 @@ export function clearTokens() {
         }
     }, 60000);
 }
+
+export function deleteToken(token) {
+    for (let i = 0; i < logedUsers.length; i++) {
+        if (logedUsers[i].token === token) {
+            logedUsers.splice(i, 1);
+        }
+    }
+}

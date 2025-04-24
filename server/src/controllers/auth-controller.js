@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import User from "../models/User.js";
-import { generateToken } from "../utils/tokens.js";
+import { deleteToken, generateToken } from "../utils/tokens.js";
 
 import { logedUsers } from "../logedUsersDB.js";
 
@@ -36,14 +36,15 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
         const result = await User.findOne({ email });
-        if(!result) {
-            return res.status(404).json({message: 'Invalid email or password'});
-        }        
-        const isValidPassword = bcrypt.compare(password, result.password);
-        if(!isValidPassword) {
-            return res.status(404).json({message: 'Invalid email or password'});
+        if (!result) {
+            return res.status(404).json({ message: 'Invalid email or password' });
         }
-        
+        const isValidPassword = await bcrypt.compare(password, result.password);
+        console.log(isValidPassword);
+        if (!isValidPassword) {
+            return res.status(404).json({ message: 'Invalid email or password' });
+        }
+
         const userData = {
             email: result.email,
             username: result.username,
@@ -58,3 +59,9 @@ export const login = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
+
+export const logout = (req, res) => {
+    const token = req.headers.token;
+    deleteToken(token);
+    res.status(200).json({ message: 'Logout successfuly!' });
+};
