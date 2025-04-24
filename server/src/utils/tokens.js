@@ -26,6 +26,5 @@ export function clearTokens() {
                 logedUsers.splice(i, 1);
             }
         }
-        // console.log(timeStamp)
     }, 60000);
 }

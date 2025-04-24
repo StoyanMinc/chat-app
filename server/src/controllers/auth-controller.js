@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import User from "../models/User.js";
 import { generateToken } from "../utils/tokens.js";
 
@@ -8,16 +9,18 @@ export const register = async (req, res) => {
     try {
         const existingUser = await User.findOne({ email });
 
-        if(existingUser) {
-           return res.status(400).json({message: 'This email is already used!'})
+        if (existingUser) {
+            return res.status(400).json({ message: 'This email is already used!' });
         }
-        const result = await User.create({ email, username, password });
-        
+        const hashedPassword = await bcrypt.hash(password, 12);
+        console.log(hashedPassword)
+        const result = await User.create({ email, username, password: hashedPassword });
+
         const userData = {
             email: result.email,
             username: result.username,
             token: generateToken(),
-            timeStamp: new Date().getTime() 
+            timeStamp: new Date().getTime()
         };
 
         res.status(201).json(userData);
@@ -25,6 +28,6 @@ export const register = async (req, res) => {
 
     } catch (error) {
         console.log('[AUTH CONTROLLER ERROR...]', error);
-        res.status(500).json({ message: 'Internal server error'});
+        res.status(500).json({ message: 'Internal server error' });
     }
 };
