@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 import { connectDB } from './lib/db.js';
 import router from './router.js';
+import { clearTokens } from './utils/tokens.js';
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -19,5 +20,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`SERVER IS LISTENING ON PORT: ${PORT}...`)
     connectDB();
+    clearTokens()
 });
 
