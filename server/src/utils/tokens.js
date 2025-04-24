@@ -19,7 +19,6 @@ export function validateToken(token) {
 
 export function clearTokens() {
     setInterval(() => {
-        console.log('Loged users:', logedUsers)
         let timeStamp = new Date().getTime();
         for (let i = 0; i < logedUsers.length; i++) {
             if (timeStamp - logedUsers[i].timeStamp > 300000) {

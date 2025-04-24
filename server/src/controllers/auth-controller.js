@@ -27,7 +27,34 @@ export const register = async (req, res) => {
         logedUsers.push(userData);
 
     } catch (error) {
-        console.log('[AUTH CONTROLLER ERROR...]', error);
+        console.log('[AUTH CONTROLLER REGISTER ERROR...]', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+export const login = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const result = await User.findOne({ email });
+        if(!result) {
+            return res.status(404).json({message: 'Invalid email or password'});
+        }        
+        const isValidPassword = bcrypt.compare(password, result.password);
+        if(!isValidPassword) {
+            return res.status(404).json({message: 'Invalid email or password'});
+        }
+        
+        const userData = {
+            email: result.email,
+            username: result.username,
+            token: generateToken(),
+            timeStamp: new Date().getTime()
+        };
+        res.status(200).json(userData);
+        logedUsers.push(userData);
+
+    } catch (error) {
+        console.log('[AUTH CONTROLLER LOGIN ERROR...]', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
