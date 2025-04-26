@@ -20,18 +20,18 @@ export function validateToken(token) {
 export function clearTokens() {
     setInterval(() => {
         let timeStamp = new Date().getTime();
-        for (let i = 0; i < logedUsers.length; i++) {
+        for (let i = logedUsers.length -1 ; i > -1; i--) {
             if (timeStamp - logedUsers[i].timeStamp > 300000) {
                 logedUsers.splice(i, 1);
             }
-        }
+        };
     }, 60000);
 }
 
 export function deleteToken(token) {
-    for (let i = 0; i < logedUsers.length; i++) {
+    for (let i = logedUsers.length -1 ; i > -1; i--) {
         if (logedUsers[i].token === token) {
             logedUsers.splice(i, 1);
         }
-    }
+    };
 }
