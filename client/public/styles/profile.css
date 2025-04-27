@@ -1,0 +1,35 @@
+.profile-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #5857A5;
+    font-weight: bold;
+}
+
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #5857A5;
+    border-radius: 100%;
+    background-image: url(../assets/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.avif);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.edit-profile {
+    width: 22px;
+    height: 22px;
+    background-image: url('../assets/pen.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
