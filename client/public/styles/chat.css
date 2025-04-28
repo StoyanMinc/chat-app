@@ -1,0 +1,72 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    width: 50%;
+    background-color: white;
+}
+
+.chat-header {
+    border-bottom: 1px solid gray;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.chat-header-p {
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.5;
+}
+
+.online {
+    width: 9px;
+    height: 9px;
+    background-color: #2DB964;
+    border-radius: 100%;
+}
+
+.chat-body {
+    flex-grow: 1;
+}
+
+.chat-messeging {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.chat-messeging input {
+    flex-grow: 1;
+    height: 100%;
+    border-radius: 20px;
+    padding-left: 10px;
+}
+
+.sendfile, .send-photo {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.sendfile {
+    background-image: url(../assets/paper-clip.svg);
+}
+
+.send-photo {
+    background-image: url(../assets/camera.svg);
+}
+
+.chat-messeging button{
+    width: 49px;
+    height: 49px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../assets/send.svg);
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+}

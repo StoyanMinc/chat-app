@@ -1,7 +1,11 @@
-.chat-window {
+.chat-page {
     width: 100%;
     height: 100%;
     display: flex;
-    background-color: yellow;
     border-radius: 10px;
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: column;
 }
