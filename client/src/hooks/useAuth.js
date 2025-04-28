@@ -14,8 +14,8 @@ export const useRegister = () => {
 
 export const useLogin = () => {
     const { changeAuthState } = getAuthContext();
-    const loginHandler = async (username, password) => {
-        const result = await post('/login', { username, password });
+    const loginHandler = async (email, password) => {
+        const result = await post('/login', { email, password });
         changeAuthState(result, true);
         console.log(result)
         localStorage.setItem('auth', JSON.stringify(result));

@@ -66,7 +66,7 @@ export default function Register() {
                 <div className="input-holder">
                     <input type="text" name="username" id="username" onChange={changeHander} />
                     <span></span>
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Full name</label>
                 </div>
                 <div className="input-holder">
                     <input type="password" name="password" id="password" onChange={changeHander} />

@@ -13,7 +13,7 @@ export default function Login() {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            await login(formData.username, formData.password);
+            await login(formData.email, formData.password);
             navigate('/');
         } catch (error) {
             console.log(error);
@@ -32,9 +32,9 @@ export default function Login() {
             <h1>Login</h1>
             <form onSubmit={submitHandler}>
                 <div className="input-holder">
-                    <input type="text" name="username" id="username" onChange={changeHandler} placeholder="Jon Doe" />
+                    <input type="text" name="email" id="email" onChange={changeHandler} placeholder="example@.com" />
                     <span></span>
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="email">Email</label>
                 </div>
                 <div className="input-holder">
                     <input type="password" name="password" id="password" onChange={changeHandler} placeholder="************" />

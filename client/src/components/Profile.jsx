@@ -7,7 +7,7 @@ export default function Profile() {
         <div className="profile-container">
             <div className="profile-info">
                 <div className="profile-img"></div>
-                <p>{authData.email}</p>
+                <p>{authData.username}</p>
             </div>
             <div className="edit-profile"></div>
         </div>

@@ -34,17 +34,16 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    const { username, password } = req.body;
-    console.log(req.body);
+    const { email, password } = req.body;
     try {
-        const result = await User.findOne({ username });
+        const result = await User.findOne({ email });
         if (!result) {
-            return res.status(404).json({ message: 'Invalid username or password' });
+            return res.status(404).json({ message: 'Invalid email or password' });
         }
         const isValidPassword = await bcrypt.compare(password, result.password);
         console.log(isValidPassword);
         if (!isValidPassword) {
-            return res.status(404).json({ message: 'Invalid username or password' });
+            return res.status(404).json({ message: 'Invalid email or password' });
         }
 
         const userData = {
