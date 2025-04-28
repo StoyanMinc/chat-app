@@ -5,6 +5,7 @@ import { deleteToken, generateToken } from "../utils/tokens.js";
 import { logedUsers } from "../logedUsersDB.js";
 
 export const register = async (req, res) => {
+    console.log('REQUEST')
     const { email, username, password } = req.body;
     try {
         const existingUser = await User.findOne({ email });
@@ -33,16 +34,17 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
+    console.log(req.body);
     try {
-        const result = await User.findOne({ email });
+        const result = await User.findOne({ username });
         if (!result) {
-            return res.status(404).json({ message: 'Invalid email or password' });
+            return res.status(404).json({ message: 'Invalid username or password' });
         }
         const isValidPassword = await bcrypt.compare(password, result.password);
         console.log(isValidPassword);
         if (!isValidPassword) {
-            return res.status(404).json({ message: 'Invalid email or password' });
+            return res.status(404).json({ message: 'Invalid username or password' });
         }
 
         const userData = {
