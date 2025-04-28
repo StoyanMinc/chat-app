@@ -11,4 +11,15 @@ export const useRegister = () => {
     }
     return registerHandler;
 }
+
+export const useLogin = () => {
+    const { changeAuthState } = getAuthContext();
+    const loginHandler = async (username, password) => {
+        const result = await post('/login', { username, password });
+        changeAuthState(result, true);
+        console.log(result)
+        localStorage.setItem('auth', JSON.stringify(result));
+        return result;
+    }
+    return loginHandler;
 }
