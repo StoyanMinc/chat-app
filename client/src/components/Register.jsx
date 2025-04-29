@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { useRegister } from "../hooks/useAuth"
@@ -15,28 +15,35 @@ export default function Register() {
         password: '',
         repass: ''
     });
+    const [showPassword, setShowPassword] = useState(false);
+    const [showRePass, setShowRepass] = useState(false);
 
     const validate = () => {
         if (!formData.email) {
-            return toast.error('Email is required!');
+            toast.error('Email is!');
+            return false
         };
         if (!formData.username) {
-            return toast.error('Username is required!');
+            toast.error('Username is!');
+            return false
         }
 
         if (!formData.password) {
-            return toast.error('Password is required!');
+            toast.error('Password is!');
+            return false
         }
 
         if (formData.password !== formData.repass) {
-            return toast.error("Passwords don/'t match!")
+            toast.error("Passwords don/'t match!")
+            return false
         }
 
+        return true;
     }
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        validate();
+        if (!validate()) return;
 
         try {
             const result = await register(formData.email, formData.username, formData.password);
@@ -53,6 +60,12 @@ export default function Register() {
         setFormData((prevData) => ({
             ...prevData, [name]: value
         }))
+
+        if (value !== "") {
+            e.target.classList.add("filled");
+        } else {
+            e.target.classList.remove("filled");
+        }
     }
     return (
         <div className="form-container">
@@ -69,18 +82,26 @@ export default function Register() {
                     <label htmlFor="username">Full name</label>
                 </div>
                 <div className="input-holder">
-                    <input type="password" name="password" id="password" onChange={changeHander} />
+                    {showPassword
+                        ? <div className="show-eye" onClick={() => setShowPassword(prevState => !prevState)}></div>
+                        : <div className="hide-eye" onClick={() => setShowPassword(prevState => !prevState)}></div>
+                    }
+                    <input type={showPassword ? 'text' : 'password'} name="password" id="password" onChange={changeHander} />
                     <span></span>
                     <label htmlFor="password">Password</label>
                 </div>
                 <div className="input-holder">
-                    <input type="password" name="repass" id="repass" onChange={changeHander} />
+                    {showRePass
+                        ? <div className="show-eye" onClick={() => setShowRepass(prevState => !prevState)}></div>
+                        : <div className="hide-eye" onClick={() => setShowRepass(prevState => !prevState)}></div>
+                    }
+                    <input type={showRePass ? 'text' : 'password'} name="repass" id="repass" onChange={changeHander} />
                     <span></span>
                     <label htmlFor="repass">Repeat password</label>
                 </div>
                 <button>Register</button>
                 <div className="signup_link">
-                    Not a Member ? <a href="signup.php">Signup</a>
+                    You are alredy registered ? <Link to={'/login'}>Login now</Link>
                 </div>
             </form>
         </div>

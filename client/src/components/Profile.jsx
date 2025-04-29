@@ -2,7 +2,7 @@ import { getAuthContext } from "../context/UserContext"
 
 export default function Profile() {
     const { authData } = getAuthContext();
-    console.log(authData);
+
     return (
         <div className="profile-container">
             <div className="profile-info">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -10,8 +11,26 @@ export default function Login() {
         password: ''
     })
 
+    const [showPassword, setShowPassword] = useState(false);
+
+    const validate = () => {
+        if (!formData.email) {
+            toast.error('Email is !')
+            return false;
+        }
+
+        if (!formData.password) {
+            toast.error('Password are !');
+            return false;
+        }
+        return true;
+    }
     const submitHandler = async (e) => {
         e.preventDefault();
+        if (!validate()) {
+            return;
+        }
+
         try {
             await login(formData.email, formData.password);
             navigate('/');
@@ -25,6 +44,12 @@ export default function Login() {
         setFormData((prevData) => ({
             ...prevData, [name]: value
         }))
+
+        if (value !== "") {
+            e.target.classList.add("filled");
+        } else {
+            e.target.classList.remove("filled");
+        }
     }
 
     return (
@@ -32,12 +57,17 @@ export default function Login() {
             <h1>Login</h1>
             <form onSubmit={submitHandler}>
                 <div className="input-holder">
-                    <input type="text" name="email" id="email" onChange={changeHandler} placeholder="example@.com" />
+                    <input type="text" name="email" id="email" onChange={changeHandler} />
                     <span></span>
                     <label htmlFor="email">Email</label>
                 </div>
                 <div className="input-holder">
-                    <input type="password" name="password" id="password" onChange={changeHandler} placeholder="************" />
+                    {showPassword
+                        ? <div className="show-eye"onClick={() => setShowPassword(prevState => !prevState)}></div>
+                        : <div className="hide-eye"onClick={() => setShowPassword(prevState => !prevState)}></div>
+                    }
+
+                    <input type={showPassword ? 'text' : 'password'} name="password" id="password" onChange={changeHandler} />
                     <span></span>
                     <label htmlFor="password">Password</label>
                 </div>

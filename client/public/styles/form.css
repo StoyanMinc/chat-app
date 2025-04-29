@@ -58,13 +58,13 @@ form .input-holder{
 }
 
 .input-holder input:focus ~ label,
-.input-holder input:valid ~ label{
+.input-holder input.filled ~ label{
   top: -5px;
   color: #2691d9;
 }
 
 .input-holder input:focus ~ span::before,
-.input-holder input:Valid ~ span::before{
+.input-holder input.filled ~ span::before{
   width: 100%;
 }
 
@@ -104,4 +104,24 @@ form .input-holder{
 .HomeAbout{
   width: 100vw;
   height: 25vh;
+}
+
+.show-eye, .hide-eye {
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  cursor: pointer;
+}
+
+.show-eye {
+  background-image: url(../assets/view.svg);
+}
+
+.hide-eye {
+  background-image: url(../assets/hide.svg);
+  position: absolute;
 }
