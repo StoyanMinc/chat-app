@@ -1,4 +1,4 @@
-import { post } from "../api/requester";
+import { post, get } from "../api/requester";
 import { getAuthContext } from "../context/UserContext"
 
 export const useRegister = () => {
@@ -22,4 +22,16 @@ export const useLogin = () => {
         return result;
     }
     return loginHandler;
+}
+
+export const useLogout = () => {
+    const { changeAuthState } = getAuthContext();
+
+    const logoutHandler = async () => {
+        await get('/logout');
+        localStorage.removeItem('auth');
+        changeAuthState(null, false);
+    }
+
+    return logoutHandler;
 }
