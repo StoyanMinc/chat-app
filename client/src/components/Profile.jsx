@@ -8,6 +8,7 @@ export default function Profile() {
     const logoutHandler = async () => {
         await logout();
     }
+
     return (
         <div className="profile-container">
             <div className="profile-info">

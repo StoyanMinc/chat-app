@@ -46,8 +46,7 @@ export default function Register() {
         if (!validate()) return;
 
         try {
-            const result = await register(formData.email, formData.username, formData.password);
-            console.log(result);
+            await register(formData.email, formData.username, formData.password);
             navigate('/');
         } catch (error) {
             console.log(error.message);

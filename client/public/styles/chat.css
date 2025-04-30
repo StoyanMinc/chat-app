@@ -25,8 +25,22 @@
     border-radius: 100%;
 }
 
+.choose-friend-container {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+
 .chat-body {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding-bottom: 18px;
+    gap: 15px;
+    border-bottom: 1px solid #000;
+    margin-bottom: 15px;
 }
 
 .chat-messeging {
@@ -42,7 +56,8 @@
     padding-left: 10px;
 }
 
-.sendfile, .send-photo {
+.sendfile,
+.send-photo {
     width: 20px;
     height: 20px;
     background-size: contain;
@@ -59,7 +74,7 @@
     background-image: url(../assets/camera.svg);
 }
 
-.chat-messeging button{
+.chat-messeging button {
     width: 49px;
     height: 49px;
     background-size: contain;
@@ -69,4 +84,35 @@
     border: none;
     background-color: #fff;
     cursor: pointer;
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.user {
+    align-items: start;
+}
+
+.friend {
+    align-items: end;
+}
+
+.message-container.user p {
+    background: lightgray;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.message-container.friend p {
+    background-color: #5857A5;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
 }

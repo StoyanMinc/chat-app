@@ -3,9 +3,10 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { getAuthContext } from "../context/UserContext";
 
 export default function AuthGuard() {
-    const { isAuth } = getAuthContext();
+    const { authData } = getAuthContext();
+    console.log(authData);
 
-    return isAuth
+    return authData.isAuth
         ? <Outlet />
         : <Navigate to={'/login'} />
 }

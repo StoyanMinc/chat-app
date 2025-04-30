@@ -3,7 +3,6 @@ import getToken from "../utils/getToken";
 
 async function requester(method, url, data) {
     // debugger;
-    console.log(BASE_URL);
     const token = getToken();
     
     const options = {
@@ -15,7 +14,6 @@ async function requester(method, url, data) {
         options.headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(data);
     }
-    console.log(options);
     if (token) {
         options.headers['token'] = token;
     }
