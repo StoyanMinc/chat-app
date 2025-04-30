@@ -3,15 +3,30 @@ import { createContext, useContext, useState } from "react"
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
-    
-    const [authState, setAuthState] = useState({
-        authData: null,
+
+    const [authData, setAuthData] = useState({
+        username: '',
+        email: '',
+        token: '',
         isAuth: false,
-        changeAuthState: (authData, boolean) => setAuthState(prevState => ({...prevState, authData: authData, isAuth: boolean}))
+        friendId: ''
     });
+
+    const updateAuthData = (authData, boolean) => setAuthData(prev => ({
+        ...prev,
+        ...authData,
+        isAuth: boolean
+    }))
+    const chooseFriend = (friendId) => setAuthData(prev => ({ ...prev, friendId }));
+
+    const contextData = {
+        authData,
+        updateAuthData,
+        chooseFriend
+    }
     
     return (
-        <UserContext.Provider value={authState}>
+        <UserContext.Provider value={contextData}>
             {children}
         </UserContext.Provider>
     )
