@@ -5,7 +5,6 @@ import { deleteToken, generateToken } from "../utils/tokens.js";
 import { logedUsers } from "../logedUsersDB.js";
 
 export const register = async (req, res) => {
-    console.log('REQUEST')
     const { email, username, password } = req.body;
     try {
         const existingUser = await User.findOne({ email });
@@ -49,6 +48,7 @@ export const login = async (req, res) => {
         const userData = {
             email: result.email,
             username: result.username,
+            userId: result._id,
             token: generateToken(),
             timeStamp: new Date().getTime()
         };
