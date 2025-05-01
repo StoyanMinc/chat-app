@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useCreateMessage } from "../hooks/useMessages";
-import { getAuthContext } from "../context/UserContext";
+import { useCreateMessage, useGetChatMessages } from "../hooks/useMessages";
+import { useGetUser } from "../hooks/useUsers";
 
-export default function Chat() {
-    const { authData } = getAuthContext();
+export default function Chat({ userId, friendId }) {
+
     const createMessage = useCreateMessage();
+    const friend = useGetUser(friendId);
+    const messages = useGetChatMessages(userId, friendId);
 
     const [messageContent, setMessageContent] = useState({
         senderId: '',
@@ -13,15 +15,11 @@ export default function Chat() {
         image: ''
     });
 
-    const userMessege = 'Hello!';
-    const friendMessage = 'Hello too!'
-
     const createMessageHandler = async () => {
-           messageContent.senderId = authData.userId;
-           messageContent.receiverId = authData.friendId;
+        messageContent.senderId = authData.userId;
+        messageContent.receiverId = authData.friendId;
         try {
-            const result = await createMessage(messageContent);
-            // console.log(result);
+            await createMessage(messageContent);
         } catch (error) {
             console.log(error);
         }
@@ -36,38 +34,32 @@ export default function Chat() {
             <div className="chat-header">
                 <div className="user-info">
                     <img src="../assets/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.avif" alt="user-image" />
-                    <p className="chat-header-p">Stoyan Minchev</p>
+                    <p className="chat-header-p">{friend.username}</p>
                     <div className="online"></div>
                 </div>
             </div>
+            <div className="chat-body">
+                {messages.map((message => {
+                    return (
+                        <div key={message._id} className={`message-container ${message.senderId._id === userId ? 'user' : 'friend'}`}>
+                            <p className="text-message">{`${message.senderId._id === userId ? 'Me' : message.senderId.username}: ${message.message}`}</p>
+                        </div>
+                    )
+                }))}
+            </div>
 
-            {authData.friendId ? (<div className="chat-body">
-                <div className="message-container user">
-                    <p className="text-message">{`Me: ${userMessege}`}</p>
-                </div>
-                <div className="message-container friend">
-                    <p className="text-message">{`My Friend: ${friendMessage}`}</p>
-                </div>
-            </div>)
-                : (<div className="choose-friend-container">
-                    <p>Choose friend to chat</p>
-                </div>)
-            }
+            <div className="chat-messeging">
+                <input
+                    type="text"
+                    placeholder="Write someting"
+                    onChange={onChangeHandler}
+                    value={messageContent.message}
+                />
 
-            {authData.friendId &&
-                (<div className="chat-messeging">
-                    <input
-                        type="text"
-                        placeholder="Write someting"
-                        onChange={onChangeHandler}
-                        value={messageContent.message}
-                    />
-
-                    <div className="sendfile"></div>
-                    <div className="send-photo"></div>
-                    <button className="send" onClick={createMessageHandler}></button>
-                </div>)
-            }
+                <div className="sendfile"></div>
+                <div className="send-photo"></div>
+                <button className="send" onClick={createMessageHandler}></button>
+            </div>
 
         </div>
     )

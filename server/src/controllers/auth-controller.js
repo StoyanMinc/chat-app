@@ -4,6 +4,8 @@ import { deleteToken, generateToken } from "../utils/tokens.js";
 
 import { logedUsers } from "../logedUsersDB.js";
 
+//TODO LOG DEBBUG...
+
 export const register = async (req, res) => {
     const { email, username, password } = req.body;
     try {

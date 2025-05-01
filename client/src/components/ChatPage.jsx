@@ -1,15 +1,21 @@
-import { useState } from "react";
 import Chat from "./Chat";
-import FriendProfile from "./FriendProfile";
+import ChooseFriend from "./ChooseFriend";
 import MenuBar from "./MenuBar";
+import { getAuthContext } from "../context/UserContext";
 
 export default function ChatPage() {
+
+    const { authData } = getAuthContext();
 
     return (
         <div className="chat-page">
             <MenuBar />
-            <Chat />
-            <FriendProfile />
+            {authData.friendId
+                ? <Chat
+                    userId={authData.userId}
+                    friendId={authData.friendId}
+                />
+                : <ChooseFriend />}
         </div>
     )
 }
