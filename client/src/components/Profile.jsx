@@ -6,7 +6,11 @@ export default function Profile() {
     const logout = useLogout();
 
     const logoutHandler = async () => {
-        await logout();
+        try {
+            await logout();
+        } catch (error) {
+            console.log(error);            
+        }
     }
 
     return (

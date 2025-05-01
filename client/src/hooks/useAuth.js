@@ -25,12 +25,13 @@ export const useLogin = () => {
 }
 
 export const useLogout = () => {
-    const { changeAuthState } = getAuthContext();
+    const { updateAuthData } = getAuthContext();
 
     const logoutHandler = async () => {
+        
         await get('/logout');
         localStorage.removeItem('auth');
-        changeAuthState(null, false);
+        updateAuthData(null, false);
     }
 
     return logoutHandler;

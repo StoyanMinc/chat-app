@@ -7,7 +7,7 @@ export default function Chat() {
     const createMessage = useCreateMessage();
 
     const [messageContent, setMessageContent] = useState({
-        sendeId: '',
+        senderId: '',
         receiverId: '',
         message: '',
         image: ''
@@ -17,7 +17,7 @@ export default function Chat() {
     const friendMessage = 'Hello too!'
 
     const createMessageHandler = async () => {
-           messageContent.sendeId = authData.userId;
+           messageContent.senderId = authData.userId;
            messageContent.receiverId = authData.friendId;
         try {
             const result = await createMessage(messageContent);

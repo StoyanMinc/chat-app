@@ -1,14 +1,10 @@
 import Message from "../models/Message.js";
 
 export const createMessage = async (req, res) => {
-    const { senderId,
-        receiverId,
-        message,
-        image } = req.body;
+  const messageData = req.body;
+  console.log(messageData)
     try {
-        const result = await Message.create({
-            senderId, receiverId, message, image
-        });
+        const result = await Message.create(messageData);
         console.log(result);
         res.status(201).json(result);
     } catch (error) {
