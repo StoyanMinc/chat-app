@@ -7,7 +7,7 @@ export default function Chat({ userId, friendId }) {
     const createMessage = useCreateMessage();
     const friend = useGetUser(friendId);
     const messages = useGetChatMessages(userId, friendId);
-
+    console.log('CHAT COMPONENT:', messages);
     const [messageContent, setMessageContent] = useState({
         senderId: '',
         receiverId: '',
@@ -16,8 +16,8 @@ export default function Chat({ userId, friendId }) {
     });
 
     const createMessageHandler = async () => {
-        messageContent.senderId = authData.userId;
-        messageContent.receiverId = authData.friendId;
+        messageContent.senderId = userId;
+        messageContent.receiverId = friendId;
         try {
             await createMessage(messageContent);
         } catch (error) {
@@ -41,8 +41,8 @@ export default function Chat({ userId, friendId }) {
             <div className="chat-body">
                 {messages.map((message => {
                     return (
-                        <div key={message._id} className={`message-container ${message.senderId._id === userId ? 'user' : 'friend'}`}>
-                            <p className="text-message">{`${message.senderId._id === userId ? 'Me' : message.senderId.username}: ${message.message}`}</p>
+                        <div key={message._id} className={`message-container ${(message.senderId._id === userId || message.senderId._id === undefined) ? 'user' : 'friend'}`}>
+                            <p className="text-message">{`${(message.senderId._id === userId || message.senderId._id === undefined) ? 'Me' : message.senderId.username}: ${message.message}`}</p>
                         </div>
                     )
                 }))}

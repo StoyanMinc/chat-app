@@ -1,4 +1,6 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { io } from 'socket.io-client';
+const BASE_URL = import.meta.env.VITE_SERVER_BASE_URL
 
 export const UserContext = createContext();
 
@@ -9,8 +11,31 @@ export default function UserProvider({ children }) {
         email: '',
         token: '',
         isAuth: false,
-        friendId: ''
+        friendId: '',
+        isConnected: false,
     });
+
+    const socketRef = useRef(null);
+
+   
+    useEffect(() => {
+        // Initialize socket with autoConnect: false
+        socketRef.current = io(BASE_URL, {
+            autoConnect: false, // Prevent auto-connect before login
+        });
+
+        socketRef.current.on("connect", () => {
+            setAuthData(prev => ({ ...prev, isConnected: true }));
+        });
+
+        socketRef.current.on("disconnect", () => {
+            setAuthData(prev => ({ ...prev, isConnected: false }));
+        });
+
+        return () => {
+            socketRef.current.disconnect();
+        };
+    }, []);
 
     const updateAuthData = (authData, boolean) => setAuthData(prev => ({
         ...prev,
@@ -19,10 +44,12 @@ export default function UserProvider({ children }) {
     }))
     const chooseFriend = (friendId) => setAuthData(prev => ({ ...prev, friendId }));
 
+
     const contextData = {
         authData,
         updateAuthData,
-        chooseFriend
+        chooseFriend,
+         socket: socketRef.current
     }
     
     return (

@@ -27,9 +27,9 @@ export const register = async (req, res) => {
 
         res.status(201).json(userData);
         logedUsers.push(userData);
-
+        console.log('[AUTH CONTROLLER] REGISTERED USER:', result);
     } catch (error) {
-        console.log('[AUTH CONTROLLER REGISTER ERROR...]', error);
+        console.log('[AUTH CONTROLLER] REGISTER ERROR...', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
@@ -42,7 +42,6 @@ export const login = async (req, res) => {
             return res.status(404).json({ message: 'Invalid email or password' });
         }
         const isValidPassword = await bcrypt.compare(password, result.password);
-        console.log(isValidPassword);
         if (!isValidPassword) {
             return res.status(404).json({ message: 'Invalid email or password' });
         }
@@ -56,9 +55,9 @@ export const login = async (req, res) => {
         };
         res.status(200).json(userData);
         logedUsers.push(userData);
-
+        console.log('[AUTH CONTROLLER] LOGGED USER:', result);
     } catch (error) {
-        console.log('[AUTH CONTROLLER LOGIN ERROR...]', error);
+        console.log('[AUTH CONTROLLER] LOGIN ERROR...', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 }
@@ -67,4 +66,5 @@ export const logout = (req, res) => {
     const token = req.headers.token;
     deleteToken(token);
     res.status(200).json({ message: 'Logout successfuly!' });
+    console.log('[AUTH CONTROLLER] LOGOUT USER');
 };
