@@ -20,16 +20,16 @@ export default function Register() {
 
     const validate = () => {
         if (!formData.email) {
-            toast.error('Email is!');
+            toast.error('Email is required!');
             return false
         };
         if (!formData.username) {
-            toast.error('Username is!');
+            toast.error('Username is required!');
             return false
         }
 
         if (!formData.password) {
-            toast.error('Password is!');
+            toast.error('Password is required!');
             return false
         }
 

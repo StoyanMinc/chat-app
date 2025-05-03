@@ -15,12 +15,12 @@ export default function Login() {
 
     const validate = () => {
         if (!formData.email) {
-            toast.error('Email is !')
+            toast.error('Email is required!')
             return false;
         }
 
         if (!formData.password) {
-            toast.error('Password are !');
+            toast.error('Password is required! !');
             return false;
         }
         return true;
@@ -30,12 +30,13 @@ export default function Login() {
         if (!validate()) {
             return;
         }
-
         try {
             await login(formData.email, formData.password);
             navigate('/');
+            toast.success('Successfully Login!')
         } catch (error) {
             console.log(error);
+            toast.error(error.message);
         }
     }
 
