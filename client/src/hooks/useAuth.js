@@ -2,10 +2,10 @@ import { post, get } from "../api/requester";
 import { getAuthContext } from "../context/UserContext"
 
 export const useRegister = () => {
-    const { changeAuthState, socket } = getAuthContext();
+    const { updateAuthData, socket } = getAuthContext();
     const registerHandler = async (email, username, password) => {
         const result = await post('/register', { email, username, password });
-        changeAuthState(result, true);
+        updateAuthData(result, true);
         localStorage.setItem('auth', JSON.stringify(result));
         return result;
     }
@@ -24,10 +24,10 @@ export const useLogin = () => {
             socket.connect();
         }
 
-        socket.emit('user-online', {
-            username: result.username,
-            userId: result.id,
-        });
+        // socket.emit('user-online', {
+        //     username: result.username,
+        //     userId: result.id,
+        // });
         return result;
     }
     return loginHandler;

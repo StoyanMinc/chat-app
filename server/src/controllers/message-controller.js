@@ -10,7 +10,7 @@ export const createMessage = async (req, res) => {
         res.status(201).json(result);
         console.log('[MESSAGE CONTROLLER] CREATE MESSAGE');
         const roomId = [result.senderId.toString(), result.receiverId.toString()].sort().join('_');
-
+        console.log('SERVER CREATE MESSAGE:', result, roomId);
         // ✅ Emit the message to the room
         io.to(roomId).emit('receive_message', result);
 

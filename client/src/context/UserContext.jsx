@@ -12,6 +12,7 @@ export default function UserProvider({ children }) {
         token: '',
         isAuth: false,
         friendId: '',
+        friendUsername:'',
         isConnected: false,
     });
 
@@ -42,7 +43,7 @@ export default function UserProvider({ children }) {
         ...authData,
         isAuth: boolean
     }))
-    const chooseFriend = (friendId) => setAuthData(prev => ({ ...prev, friendId }));
+    const chooseFriend = (friendId, friendUsername) => setAuthData(prev => ({ ...prev, friendId, friendUsername }));
 
 
     const contextData = {

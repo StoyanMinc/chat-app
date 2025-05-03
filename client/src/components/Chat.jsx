@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useCreateMessage, useGetChatMessages } from "../hooks/useMessages";
 import { useGetUser } from "../hooks/useUsers";
+import { getAuthContext } from "../context/UserContext";
 
-export default function Chat({ userId, friendId }) {
+export default function Chat() {
 
+    const { authData } = getAuthContext();
     const createMessage = useCreateMessage();
-    const friend = useGetUser(friendId);
-    const messages = useGetChatMessages(userId, friendId);
+    const friend = useGetUser(authData.friendId);
+    const messages = useGetChatMessages(authData.userId, authData.friendId);
     console.log('CHAT COMPONENT:', messages);
     const [messageContent, setMessageContent] = useState({
         senderId: '',
@@ -16,8 +18,8 @@ export default function Chat({ userId, friendId }) {
     });
 
     const createMessageHandler = async () => {
-        messageContent.senderId = userId;
-        messageContent.receiverId = friendId;
+        messageContent.senderId = authData.userId;
+        messageContent.receiverId = authData.friendId;
         try {
             await createMessage(messageContent);
         } catch (error) {
@@ -41,8 +43,8 @@ export default function Chat({ userId, friendId }) {
             <div className="chat-body">
                 {messages.map((message => {
                     return (
-                        <div key={message._id} className={`message-container ${(message.senderId._id === userId || message.senderId._id === undefined) ? 'user' : 'friend'}`}>
-                            <p className="text-message">{`${(message.senderId._id === userId || message.senderId._id === undefined) ? 'Me' : message.senderId.username}: ${message.message}`}</p>
+                        <div key={message._id} className={`message-container ${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'user' : 'friend'}`}>
+                            <p className="text-message">{`${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'Me' : authData.friendUsername}: ${message.message}`}</p>
                         </div>
                     )
                 }))}
