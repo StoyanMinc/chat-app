@@ -1,21 +1,13 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { io } from 'socket.io-client';
+import { initialUserValues } from "../constants";
 const BASE_URL = import.meta.env.VITE_SERVER_BASE_URL
 
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
 
-    const [authData, setAuthData] = useState({
-        username: '',
-        email: '',
-        token: '',
-        isAuth: false,
-        friendId: '',
-        friendUsername: '',
-        isConnected: false,
-        onlineUsers: [],
-    });
+    const [authData, setAuthData] = useState(initialUserValues);
 
     const socketRef = useRef(null);
 

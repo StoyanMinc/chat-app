@@ -1,5 +1,6 @@
 import { post, get } from "../api/requester";
 import { getAuthContext } from "../context/UserContext"
+import { initialUserValues } from "../constants";
 
 export const useRegister = () => {
     const { updateAuthData, socket } = getAuthContext();
@@ -33,14 +34,13 @@ export const useLogin = () => {
 
 //TODO update logout functionality
 export const useLogout = () => {
-    const {authData, socket} = getAuthContext();
-    const { updateAuthData } = getAuthContext();
+    const { authData, updateAuthData, socket } = getAuthContext();
 
     const logoutHandler = async () => {
 
         await get('/logout');
         localStorage.removeItem('auth');
-        updateAuthData(null, false);
+        updateAuthData(initialUserValues, false);
         socket.emit('logout_user', authData.userId);
     }
 
