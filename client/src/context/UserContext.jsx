@@ -12,22 +12,27 @@ export default function UserProvider({ children }) {
         token: '',
         isAuth: false,
         friendId: '',
-        friendUsername:'',
+        friendUsername: '',
         isConnected: false,
+        onlineUsers: [],
     });
 
     const socketRef = useRef(null);
 
-   
+
     useEffect(() => {
         // Initialize socket with autoConnect: false
         socketRef.current = io(BASE_URL, {
-            autoConnect: false, // Prevent auto-connect before login
+            // autoConnect: false, // Prevent auto-connect before login
         });
 
         socketRef.current.on("connect", () => {
             setAuthData(prev => ({ ...prev, isConnected: true }));
         });
+
+        socketRef.current.on('update_online_users', (userIds) => {
+            setAuthData(prev => ({ ...prev, onlineUsers: userIds }));
+        })
 
         socketRef.current.on("disconnect", () => {
             setAuthData(prev => ({ ...prev, isConnected: false }));
@@ -45,14 +50,13 @@ export default function UserProvider({ children }) {
     }))
     const chooseFriend = (friendId, friendUsername) => setAuthData(prev => ({ ...prev, friendId, friendUsername }));
 
-
     const contextData = {
         authData,
         updateAuthData,
         chooseFriend,
-         socket: socketRef.current
+        socket: socketRef.current
     }
-    
+
     return (
         <UserContext.Provider value={contextData}>
             {children}

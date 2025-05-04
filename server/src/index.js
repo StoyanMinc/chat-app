@@ -5,7 +5,7 @@ import cors from 'cors';
 import { connectDB } from './lib/db.js';
 import { app, server } from './lib/socket.js';
 import router from './router.js';
-import { clearTokens } from './utils/tokens.js';
+// import { clearTokens } from './utils/tokens.js';
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -18,9 +18,11 @@ app.get('/', (req, res) => {
     res.send('hi')
 });
 
+
+
 server.listen(PORT, () => {
     console.log(`SERVER IS LISTENING ON PORT: ${PORT}...`)
     connectDB();
-    clearTokens()
+    // clearTokens()
 });
 

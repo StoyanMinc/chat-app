@@ -5,7 +5,7 @@ export default function UsersList() {
 
     const { authData, chooseFriend } = getAuthContext();
     const users = useGetAllUsers(authData.userId);
-
+    
     const selectFriendHandler = async (friendId, friendUsername) => {
         chooseFriend(friendId, friendUsername);
     }

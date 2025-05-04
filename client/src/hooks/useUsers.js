@@ -21,12 +21,10 @@ export const useGetAllUsers = (userId) => {
 
 export const useGetUser = (userId) => {
 
-
     const [user, setUser] = useState({});
     if (!userId) {
         return
     }
-
     useEffect(() => {
 
         (async () => {
@@ -34,6 +32,20 @@ export const useGetUser = (userId) => {
             setUser(result);
         })();
     }, [userId]);
-
     return user;
+}
+
+//TODO check if this hook is needed...
+export const useGetOnlineUsers = () => {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            const result = await get('/get-online-users');
+            setUsers(result);
+
+        })();
+    }, []);
+
+    return users;
 }

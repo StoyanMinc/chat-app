@@ -26,9 +26,8 @@ export const useGetChatMessages = (userId, friendId) => {
         socket.connect();
         const roomId = [userId, friendId].sort().join('_');
         socket.emit('join_room', roomId);
+        
         const handleReceiveMessage = (newMessage) => {
-            console.log('SOCKET.IO:',newMessage)
-         
             setChatMessages(prevMessages => [...prevMessages, newMessage]);
         };
         socket.on('receive_message', handleReceiveMessage);

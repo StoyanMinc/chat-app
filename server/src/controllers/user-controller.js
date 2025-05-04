@@ -1,3 +1,4 @@
+import { onlineUsers } from "../lib/socket.js";
 import User from "../models/User.js";
 
 //TODO LOG DEBBUG...
@@ -22,4 +23,9 @@ export const getOneUser = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error });
     }
+};
+
+export const getOnlineUsers = (req, res) => {
+  const users = Array.from(onlineUsers.keys());
+  res.status(200).json(users);  
 };

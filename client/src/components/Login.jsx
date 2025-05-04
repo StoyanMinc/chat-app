@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useLogin } from "../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
+import { getAuthContext } from "../context/UserContext";
 
 export default function Login() {
+    const { socket } = getAuthContext();
     const navigate = useNavigate();
     const login = useLogin();
     const [formData, setFormData] = useState({
@@ -31,9 +33,10 @@ export default function Login() {
             return;
         }
         try {
-            await login(formData.email, formData.password);
+            const result = await login(formData.email, formData.password);
             navigate('/');
-            toast.success('Successfully Login!')
+            toast.success('Successfully Login!');
+            // socket.emit('user_is_login', (result._id));
         } catch (error) {
             console.log(error);
             toast.error(error.message);
@@ -64,8 +67,8 @@ export default function Login() {
                 </div>
                 <div className="input-holder">
                     {showPassword
-                        ? <div className="show-eye"onClick={() => setShowPassword(prevState => !prevState)}></div>
-                        : <div className="hide-eye"onClick={() => setShowPassword(prevState => !prevState)}></div>
+                        ? <div className="show-eye" onClick={() => setShowPassword(prevState => !prevState)}></div>
+                        : <div className="hide-eye" onClick={() => setShowPassword(prevState => !prevState)}></div>
                     }
 
                     <input type={showPassword ? 'text' : 'password'} name="password" id="password" onChange={changeHandler} />

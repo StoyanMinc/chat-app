@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
 import User from "../models/User.js";
-import { deleteToken, generateToken } from "../utils/tokens.js";
+import { generateToken } from "../utils/tokens.js";
 
-import { logedUsers } from "../logedUsersDB.js";
 
 //TODO LOG DEBBUG...
 
@@ -26,7 +25,7 @@ export const register = async (req, res) => {
         };
 
         res.status(201).json(userData);
-        logedUsers.push(userData);
+
         console.log('[AUTH CONTROLLER] REGISTERED USER:', result);
     } catch (error) {
         console.log('[AUTH CONTROLLER] REGISTER ERROR...', error);
@@ -54,7 +53,7 @@ export const login = async (req, res) => {
             timeStamp: new Date().getTime()
         };
         res.status(200).json(userData);
-        logedUsers.push(userData);
+
         console.log('[AUTH CONTROLLER] LOGGED USER:', result);
     } catch (error) {
         console.log('[AUTH CONTROLLER] LOGIN ERROR...', error);
@@ -62,9 +61,9 @@ export const login = async (req, res) => {
     }
 }
 
+//TODO fix logout token
 export const logout = (req, res) => {
     const token = req.headers.token;
-    deleteToken(token);
     res.status(200).json({ message: 'Logout successfuly!' });
     console.log('[AUTH CONTROLLER] LOGOUT USER');
 };

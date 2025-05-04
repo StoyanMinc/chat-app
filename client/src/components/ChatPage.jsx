@@ -7,6 +7,7 @@ export default function ChatPage() {
 
     const { authData } = getAuthContext();
 
+    console.log(authData);
     return (
         <div className="chat-page">
             <MenuBar />
