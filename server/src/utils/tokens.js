@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { onlineUsers } from '../lib/socket.js';
 
 
 export function generateToken() {
@@ -6,15 +7,15 @@ export function generateToken() {
     return token;
 }
 
-// export function validateToken(token) {
+export function validateToken(token) {
 
-//     let user = logedUsers.find(u => u.token === token);
-//     if (!user) {
-//         return false
-//     }
-//     user.timeStamp = new Date().getTime();
-//     return true;
-// }
+    let user = onlineUsers.find(u => u.token === token);
+    if (!user) {
+        return false
+    }
+    user.timeStamp = new Date().getTime();
+    return true;
+}
 
 // export function clearTokens() {
 //     setInterval(() => {
