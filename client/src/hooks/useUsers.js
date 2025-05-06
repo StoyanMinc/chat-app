@@ -6,7 +6,7 @@ import { get } from "../api/requester";
 
 export const useGetAllUsers = (userId) => {
 
-
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
 
     useEffect(() => {

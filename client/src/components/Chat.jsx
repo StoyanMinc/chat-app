@@ -19,6 +19,7 @@ export default function Chat() {
     const createMessageHandler = async () => {
         messageContent.senderId = authData.userId;
         messageContent.receiverId = authData.friendId;
+        setMessageContent(prev => ({ ...prev, message: '' }))
         try {
             await createMessage(messageContent);
         } catch (error) {
@@ -52,7 +53,7 @@ export default function Chat() {
             <div className="chat-messeging">
                 <input
                     type="text"
-                    placeholder="Write someting"
+                    placeholder="Write someting..."
                     onChange={onChangeHandler}
                     value={messageContent.message}
                 />
