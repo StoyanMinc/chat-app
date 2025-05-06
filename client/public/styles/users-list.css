@@ -35,8 +35,23 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
 }
 
 .users-list li span {
     font-size: 13px;
+}
+
+.selected-friend {
+    background-color: #fff;
+}
+
+.green-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #2DB964;
+    border-radius: 100%;
+    position: absolute;
+    left: 38px;
+    bottom: 1px;
 }
