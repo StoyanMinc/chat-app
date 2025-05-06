@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+// import { useNavigate } from 'react-router;'
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { get } from "../api/requester";
 
 export const useGetAllUsers = (userId) => {
+
 
     const [users, setUsers] = useState([]);
 
@@ -10,9 +13,10 @@ export const useGetAllUsers = (userId) => {
 
         get(`/get-users?exclude=${userId}`)
             .then(result => setUsers(result))
-            .catch(err => {
-                console.log(err);
-                toast.error(err.message);
+            .catch(error => {
+                console.log(error);
+                toast.error(error);
+                navigate('/login');
             })
     }, []);
 
@@ -20,7 +24,7 @@ export const useGetAllUsers = (userId) => {
 }
 
 export const useGetUser = (userId) => {
-
+    const navigate = useNavigate();
     const [user, setUser] = useState({});
     if (!userId) {
         return
@@ -28,8 +32,13 @@ export const useGetUser = (userId) => {
     useEffect(() => {
 
         (async () => {
-            const result = await get(`/get-user?userId=${userId}`);
-            setUser(result);
+            try {
+                const result = await get(`/get-user?userId=${userId}`);
+                setUser(result);
+            } catch (error) {
+                toast.error('Invalid token');
+                navigate('/login');
+            }
         })();
     }, [userId]);
     return user;

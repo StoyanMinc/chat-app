@@ -4,7 +4,6 @@ import getToken from "../utils/getToken";
 async function requester(method, url, data) {
     // debugger;
     const token = getToken();
-    
     const options = {
         method: method,
         headers: {}
@@ -22,7 +21,7 @@ async function requester(method, url, data) {
 
     if (!response.ok) {
         const error = await response.json();
-        if (error.code === 403) {
+        if (response.status === 403) {
             localStorage.removeItem('auth');
         }
         throw new Error(error.message);

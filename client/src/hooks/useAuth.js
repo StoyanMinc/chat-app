@@ -26,7 +26,7 @@ export const useLogin = () => {
 
         localStorage.setItem('auth', JSON.stringify(result));
         console.log(result);
-        socket.emit('user_is_login', result.userId);
+        socket.emit('user_is_login', {userId: result.userId, timeStamp: result.timeStamp, token: result.token});
         return result;
     }
     return loginHandler;

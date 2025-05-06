@@ -17,16 +17,16 @@ export function validateToken(token) {
     return true;
 }
 
-// export function clearTokens() {
-//     setInterval(() => {
-//         let timeStamp = new Date().getTime();
-//         for (let i = logedUsers.length -1 ; i > -1; i--) {
-//             if (timeStamp - logedUsers[i].timeStamp > 300000) {
-//                 logedUsers.splice(i, 1);
-//             }
-//         };
-//     }, 60000);
-// }
+export function clearTokens() {
+    setInterval(() => {
+        let timeStamp = new Date().getTime();
+        for (const [userId, userData] of onlineUsers) {
+            if (timeStamp - userData.timeStamp > 300000) {
+                onlineUsers.delete(userId)
+            }
+        };
+    }, 60000);
+}
 
 // export function deleteToken(token) {
 //     for (let i = logedUsers.length -1 ; i > -1; i--) {

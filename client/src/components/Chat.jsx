@@ -9,7 +9,6 @@ export default function Chat() {
     const createMessage = useCreateMessage();
     const friend = useGetUser(authData.friendId);
     const messages = useGetChatMessages(authData.userId, authData.friendId);
-    console.log('CHAT COMPONENT:', messages);
     const [messageContent, setMessageContent] = useState({
         senderId: '',
         receiverId: '',
