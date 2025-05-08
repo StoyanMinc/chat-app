@@ -4,7 +4,7 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const messagesRouter = Router();
 
-messagesRouter.post('/create-message', createMessage);
+messagesRouter.post('/create-message', authMiddleware, createMessage);
 messagesRouter.get('/get-chat-messages', authMiddleware, getChatMessages);
 
 export default messagesRouter;

@@ -18,7 +18,7 @@ export default function UsersList() {
                         return (
                             <li key={user._id} onClick={() => selectFriendHandler(user._id, user.username)} className={authData.friendId === user._id ? 'selected-friend' : null}>
                                 <div className="user-info">
-                                    <img src="../assets/avatar.avif" alt="user-image" />
+                                    <img src={user.profilePic || "../assets/avatar.avif" }alt="user-image" />
                                     <p>{user.username}</p>
                                    {authData.onlineUsers.includes(user._id) && <div className="green-dot"></div>}
                                 </div>

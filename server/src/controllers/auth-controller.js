@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import User from "../models/User.js";
 import { generateToken } from "../utils/tokens.js";
+import cloudinary from '../lib/cloudinary.js';
 
 
 //TODO LOG DEBBUG...
@@ -49,6 +50,7 @@ export const login = async (req, res) => {
             email: result.email,
             username: result.username,
             userId: result._id,
+            profilePic: result.profilePic,
             token: generateToken(),
             timeStamp: new Date().getTime()
         };
@@ -66,4 +68,21 @@ export const logout = (req, res) => {
     const token = req.headers.token;
     res.status(200).json({ message: 'Logout successfuly!' });
     console.log('[AUTH CONTROLLER] LOGOUT USER');
+};
+
+export const updateProfile = async (req, res) => {
+    const { userId } = req.query;
+    try {
+        const { profilePic } = req.body;
+        if (!profilePic) {
+            return res.status(400).json({ error: 'Profile picture is reqiured!' });
+        }
+        const uploadedPic = await cloudinary.uploader.upload(profilePic);
+        const updatedUser = await User.findByIdAndUpdate(userId, { profilePic: uploadedPic.secure_url }, { new: true }).select('-password');
+        res.status(200).json(updatedUser);
+        console.log('[AUTH CONTROLLER] UPDATED USER:', updatedUser);
+    } catch (error) {
+        console.log('[AUTH CONTROLLER] UPDATE USER ERROR...', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };

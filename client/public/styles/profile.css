@@ -3,7 +3,6 @@
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    position: relative;
 }
 
 .profile-info {
@@ -12,17 +11,29 @@
     gap: 10px;
     color: #5857A5;
     font-weight: bold;
+    position: relative;
+
+}
+.profile-image-wrapper {
+    position: relative;
+    width: 75px;
+    height: 75px;
 }
 
 .profile-img {
     width: 75px;
     height: 75px;
     border: 2px solid #5857A5;
-    border-radius: 100%;
-    background-image: url(../assets/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.avif);
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.change-image-label {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .logout {
@@ -48,9 +59,6 @@
     background-image: url(../assets/camera.svg);
     background-color: #fff;
     border-radius: 100%;
-    position: absolute;
-    left: 83px;
-    bottom: 30px;
     border: 2px solid #5857A5;
 }
 

@@ -1,4 +1,4 @@
-import { post, get } from "../api/requester";
+import { post, get, put } from "../api/requester";
 import { getAuthContext } from "../context/UserContext"
 import { initialUserValues } from "../constants";
 
@@ -26,7 +26,7 @@ export const useLogin = () => {
 
         localStorage.setItem('auth', JSON.stringify(result));
         console.log(result);
-        socket.emit('user_is_login', {userId: result.userId, timeStamp: result.timeStamp, token: result.token});
+        socket.emit('user_is_login', { userId: result.userId, timeStamp: result.timeStamp, token: result.token });
         return result;
     }
     return loginHandler;
@@ -45,4 +45,12 @@ export const useLogout = () => {
     }
 
     return logoutHandler;
+}
+
+export const useUpdateProfile = () => {
+    const updateProfileHandler = async (userId, profilePic) => {
+        await put(`/update-profile?userId=${userId}`, { profilePic });
+    }
+
+    return updateProfileHandler;
 }

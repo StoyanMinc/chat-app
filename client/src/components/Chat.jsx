@@ -50,7 +50,7 @@ export default function Chat() {
         <div className="chat">
             <div className="chat-header">
                 <div className="user-info">
-                    <img src="../assets/avatar.avif" alt="user-image" />
+                    <img src={friend.profilePic || "../assets/avatar.avif"} alt="user-image" />
                     <p className="chat-header-p">{friend.username}</p>
                     {authData.onlineUsers.includes(authData.friendId) && <div className="online"></div>}
                 </div>
