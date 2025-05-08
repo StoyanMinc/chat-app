@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 import { post, get } from "../api/requester";
-// import socket from "../lib/socket";
 import { getAuthContext } from "../context/UserContext";
 
 export const useCreateMessage = () => {
-    const {socket} = getAuthContext();
+    const { socket } = getAuthContext();
     const createMessageHandler = async (messageData) => {
         const result = await post('/create-message', messageData);
     }
-
     return createMessageHandler;
 }
 
 export const useGetChatMessages = (userId, friendId) => {
-    const {socket} = getAuthContext();
+    const { socket } = getAuthContext();
 
     const [chatMessages, setChatMessages] = useState([]);
+    console.log('GET MESSAGES')
 
     useEffect(() => {
         (async () => {
@@ -26,7 +25,7 @@ export const useGetChatMessages = (userId, friendId) => {
         socket.connect();
         const roomId = [userId, friendId].sort().join('_');
         socket.emit('join_room', roomId);
-        
+
         const handleReceiveMessage = (newMessage) => {
             setChatMessages(prevMessages => [...prevMessages, newMessage]);
         };
@@ -35,7 +34,7 @@ export const useGetChatMessages = (userId, friendId) => {
             socket.off("receive_message", handleReceiveMessage);
             socket.disconnect();
         };
-    }, []);
+    }, [friendId]);
 
     return chatMessages;
 }

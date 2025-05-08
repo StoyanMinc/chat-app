@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCreateMessage, useGetChatMessages } from "../hooks/useMessages";
 import { useGetUser } from "../hooks/useUsers";
 import { getAuthContext } from "../context/UserContext";
@@ -16,6 +16,17 @@ export default function Chat() {
         image: ''
     });
 
+    const chatBodyRef = useRef(null);
+
+    useEffect(() => {
+        if (chatBodyRef.current) {
+            chatBodyRef.current.scrollTo({
+                top: chatBodyRef.current.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    },[messages]);
+
     const createMessageHandler = async () => {
         messageContent.senderId = authData.userId;
         messageContent.receiverId = authData.friendId;
@@ -31,16 +42,20 @@ export default function Chat() {
         setMessageContent(prevState => ({ ...prevState, message: e.target.value }))
     }
 
+    const onFileChangeHandler = (e) => {
+
+    }
+
     return (
         <div className="chat">
             <div className="chat-header">
                 <div className="user-info">
-                    <img src="../assets/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.avif" alt="user-image" />
+                    <img src="../assets/avatar.avif" alt="user-image" />
                     <p className="chat-header-p">{friend.username}</p>
-                    <div className="online"></div>
+                    {authData.onlineUsers.includes(authData.friendId) && <div className="online"></div>}
                 </div>
             </div>
-            <div className="chat-body">
+            <div className="chat-body" ref={chatBodyRef}>
                 {messages.map((message => {
                     return (
                         <div key={message._id} className={`message-container ${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'user' : 'friend'}`}>

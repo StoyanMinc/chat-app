@@ -9,18 +9,22 @@ export default function Profile() {
         try {
             await logout();
         } catch (error) {
-            console.log(error);            
+            console.log(error);
         }
     }
 
     return (
         <div className="profile-container">
             <div className="profile-info">
-                <div className="profile-img"></div>
+                <img className="profile-img" src="./assets/avatar.avif"></img>
                 <p>{authData.username}</p>
-                <div className="change-picture"></div>
+                <label htmlFor="change-image">
+                    {/* <img src="" alt="profile-image" className="change-image" /> */}
+                    <div className="change-image"></div>
+                    <input type="file" name="change-image" id="change-image" className="change-image-input"/>
+                </label>
             </div>
-                <div className="logout" onClick={logoutHandler}></div>
+            <div className="logout" onClick={logoutHandler}></div>
         </div>
     )
 }   

@@ -3,7 +3,9 @@
     flex-direction: column;
     padding: 2em;
     width: 100%;
+    height: 100vh;
     background-color: white;
+    
 }
 
 .chat-header {
@@ -36,11 +38,11 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: end;
     padding-bottom: 18px;
     gap: 15px;
     border-bottom: 1px solid #000;
     margin-bottom: 15px;
+    overflow-y: auto;
 }
 
 .chat-messeging {
