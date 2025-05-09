@@ -14,9 +14,9 @@ export const useGetChatMessages = (userId, friendId) => {
     const { socket } = getAuthContext();
 
     const [chatMessages, setChatMessages] = useState([]);
-    console.log('GET MESSAGES')
 
     useEffect(() => {
+        if (!userId || !friendId || !socket) return;
         (async () => {
             const result = await get(`/get-chat-messages?userId=${userId}&friendId=${friendId}`);
             setChatMessages(result);
@@ -34,7 +34,7 @@ export const useGetChatMessages = (userId, friendId) => {
             socket.off("receive_message", handleReceiveMessage);
             socket.disconnect();
         };
-    }, [friendId]);
+    }, [friendId, userId, socket]);
 
     return chatMessages;
 }

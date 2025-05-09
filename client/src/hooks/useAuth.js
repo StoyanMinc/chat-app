@@ -26,7 +26,9 @@ export const useLogin = () => {
 
         localStorage.setItem('auth', JSON.stringify(result));
         console.log(result);
-        socket.emit('user_is_login', { userId: result.userId, timeStamp: result.timeStamp, token: result.token });
+        if(socket.current?.connected) {
+            socket.current.emit('user_is_login', { userId: result.userId, timeStamp: result.timeStamp, token: result.token });
+        }
         return result;
     }
     return loginHandler;
@@ -41,7 +43,9 @@ export const useLogout = () => {
         await get('/logout');
         localStorage.removeItem('auth');
         updateAuthData(initialUserValues, false);
-        socket.emit('logout_user', authData.userId);
+         if(socket.current?.connected) {
+            socket.current.emit('logout_user', authData.userId);
+        }
     }
 
     return logoutHandler;

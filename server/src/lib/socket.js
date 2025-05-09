@@ -2,7 +2,6 @@ import express from 'express';
 
 import { Server } from 'socket.io';
 import http from 'http';
-import { timeStamp } from 'console';
 const app = express();
 
 const server = http.createServer(app);
@@ -15,19 +14,24 @@ const io = new Server(server, {
 });
 
 export const onlineUsers = new Map();
+export const activeTokens = new Map();
 
 io.on('connection', (socket) => {
     console.log(`A user with id: ${socket.id} is connected!`);
 
     socket.on('user_is_login', (userData) => {
-        onlineUsers.set(userData.userId, {socketId: socket.id, token: userData.token, timeStamp: userData.timeStamp});
+        onlineUsers.set(userData.userId, { socketId: socket.id, token: userData.token, timeStamp: userData.timeStamp });
         io.emit('update_online_users', Array.from(onlineUsers.keys()));
-        console.log(onlineUsers);
+        console.log('ONLINE USERS', onlineUsers);
+        console.log('ACTIVE TOKENS:', activeTokens);
+
     })
 
     socket.on('logout_user', (userId) => {
         onlineUsers.delete(userId);
         io.emit('update_online_users', Array.from(onlineUsers.keys()));
+        console.log('ONLINE USERS', onlineUsers);
+        console.log('ACTIVE TOKENS:', activeTokens);
     });
     socket.on('join_room', (roomId) => {
         socket.join(roomId);
@@ -35,9 +39,9 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        for (const user of onlineUsers) {
-            if (socket.id === user.socketId) {
-                onlineUsers.delete(user);
+        for (const [userId, userData] of onlineUsers) {
+            if (socket.id === userData.socketId) {
+                onlineUsers.delete(userId);
                 break;
             }
         };

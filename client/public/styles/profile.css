@@ -3,6 +3,7 @@
     align-items: center;
     width: 100%;
     justify-content: space-between;
+    position: relative;
 }
 
 .profile-info {
@@ -11,7 +12,7 @@
     gap: 10px;
     color: #5857A5;
     font-weight: bold;
-    position: relative;
+    /* position: relative; */
 
 }
 .profile-image-wrapper {

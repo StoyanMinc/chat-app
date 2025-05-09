@@ -1,4 +1,4 @@
-import { onlineUsers } from "../lib/socket.js";
+import { activeTokens } from "../lib/socket.js";
 
 export const authMiddleware = async (req, res, next) => {
 
@@ -8,7 +8,7 @@ export const authMiddleware = async (req, res, next) => {
     }
 
     let userIsLogged = false;
-    for (const [userId, userData] of onlineUsers) {
+    for (const [userId, userData] of activeTokens) {
         if (userData.token === token) {
             userIsLogged = true;
             break;

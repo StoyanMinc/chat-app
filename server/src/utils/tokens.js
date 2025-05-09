@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { onlineUsers } from '../lib/socket.js';
+import { activeTokens } from '../lib/socket.js';
 
 
 export function generateToken() {
@@ -20,11 +20,12 @@ export function validateToken(token) {
 export function clearTokens() {
     setInterval(() => {
         let timeStamp = new Date().getTime();
-        for (const [userId, userData] of onlineUsers) {
+        for (const [userId, userData] of activeTokens) {
             if (timeStamp - userData.timeStamp > 300000) {
-                onlineUsers.delete(userId)
+                activeTokens.delete(userId);
             }
         };
+        console.log(activeTokens);
     }, 60000);
 }
 
