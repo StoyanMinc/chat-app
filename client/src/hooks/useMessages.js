@@ -22,7 +22,7 @@ export const useGetChatMessages = (userId, friendId) => {
             setChatMessages(result);
         })();
 
-        socket.connect();
+        socket?.connect();
         const roomId = [userId, friendId].sort().join('_');
         socket.emit('join_room', roomId);
 

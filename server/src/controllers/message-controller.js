@@ -1,4 +1,6 @@
 import { io } from "../lib/socket.js";
+import cloudinary from '../lib/cloudinary.js';
+
 import Message from "../models/Message.js";
 
 //TODO LOG DEBBUG...
@@ -6,6 +8,10 @@ import Message from "../models/Message.js";
 export const createMessage = async (req, res) => {
     const messageData = req.body;
     try {
+        if(messageData.image) {
+            const uploadedPic = await cloudinary.uploader.upload(messageData.image);
+            messageData.image = uploadedPic.secure_url;
+        }
         const result = await Message.create(messageData);
         res.status(201).json(result);
         console.log('[MESSAGE CONTROLLER] CREATE MESSAGE');

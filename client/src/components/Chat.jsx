@@ -25,12 +25,12 @@ export default function Chat() {
                 behavior: 'smooth'
             });
         }
-    },[messages]);
+    }, [messages]);
 
     const createMessageHandler = async () => {
         messageContent.senderId = authData.userId;
         messageContent.receiverId = authData.friendId;
-        setMessageContent(prev => ({ ...prev, message: '' }))
+        setMessageContent(prev => ({ ...prev, message: '', image: '' }))
         try {
             await createMessage(messageContent);
         } catch (error) {
@@ -42,8 +42,21 @@ export default function Chat() {
         setMessageContent(prevState => ({ ...prevState, message: e.target.value }))
     }
 
-    const onFileChangeHandler = (e) => {
+    const onImageChangeHandler = (e) => {
+        const file = e.target.files[0];
+        if (!file) {
+            return
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const base64Image = reader.result;
+            setMessageContent(prev => ({ ...prev, image: base64Image }));
+        }
+    }
 
+    const removeImage = () => {
+        setMessageContent(prev => ({ ...prev, image: '' }));
     }
 
     return (
@@ -58,11 +71,35 @@ export default function Chat() {
             <div className="chat-body" ref={chatBodyRef}>
                 {messages.map((message => {
                     return (
-                        <div key={message._id} className={`message-container ${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'user' : 'friend'}`}>
-                            <p className="text-message">{`${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'Me' : authData.friendUsername}: ${message.message}`}</p>
+                        <div
+                            key={message._id}
+                            className={`message-container
+                           ${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'user' : 'friend'}`}
+                        >
+                            {/* {message.message && */}
+                                <p className="text-message">
+                                    {`${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'Me' : authData.friendUsername}: ${message.message}`}
+                                </p>
+                            {/* } */}
+                            {/* {message.image && */}
+                                {/* <div className="text-image-holder"> */}
+                                    {/* <img className="text-image">
+                                        {`${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'Me' : authData.friendUsername}:`}
+                                    </p> */}
+                                   {message.image &&  <img className="sended-image" src={message.image} alt="image" />}
+                                {/* </div> */}
+
+                            {/* } */}
+
                         </div>
                     )
                 }))}
+                {messageContent.image &&
+                    <div className="send-image-holder">
+                        <div className="close-image" onClick={removeImage}></div>
+                        <img className="image-preview" src={messageContent.image}></img>
+                    </div>
+                }
             </div>
 
             <div className="chat-messeging">
@@ -72,9 +109,16 @@ export default function Chat() {
                     onChange={onChangeHandler}
                     value={messageContent.message}
                 />
-
-                <div className="sendfile"></div>
-                <div className="send-photo"></div>
+                <label htmlFor="send-image">
+                    <input
+                        type="file"
+                        id="send-image"
+                        name="send-image"
+                        className="input-send-image"
+                        onChange={onImageChangeHandler}
+                    />
+                    <div className="send-image"></div>
+                </label>
                 <button className="send" onClick={createMessageHandler}></button>
             </div>
 

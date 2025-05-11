@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import User from "../models/User.js";
 import { generateToken } from "../utils/tokens.js";
 import cloudinary from '../lib/cloudinary.js';
-import { activeTokens, onlineUsers } from '../lib/socket.js';
+import { activeTokens } from '../lib/socket.js';
 
 
 //TODO LOG DEBBUG...

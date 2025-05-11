@@ -46,7 +46,7 @@ export default function UserProvider({ children }) {
         authData,
         updateAuthData,
         chooseFriend,
-        socket: socketRef
+        socket: socketRef.current
     }
 
     return (

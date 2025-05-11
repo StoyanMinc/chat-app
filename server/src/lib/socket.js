@@ -20,6 +20,7 @@ io.on('connection', (socket) => {
     console.log(`A user with id: ${socket.id} is connected!`);
 
     socket.on('user_is_login', (userData) => {
+        console.log('SOCKET CONNECTION:', userData);
         onlineUsers.set(userData.userId, { socketId: socket.id, token: userData.token, timeStamp: userData.timeStamp });
         io.emit('update_online_users', Array.from(onlineUsers.keys()));
         console.log('ONLINE USERS', onlineUsers);
