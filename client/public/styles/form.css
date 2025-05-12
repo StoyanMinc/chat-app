@@ -1,9 +1,9 @@
 .form-container{
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 35vw;
+  width: 35vw; */
   background: white;
   border-radius: 10px;
   padding: 10px;

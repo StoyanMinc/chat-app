@@ -73,7 +73,7 @@ export const logout = (req, res) => {
         }
     }
     res.status(200).json({ message: 'Logout successfuly!' });
-    console.log('[AUTH CONTROLLER] LOGOUT USER');
+    console.log('[AUTH CONTROLLER] LOGOUT USER', token);
 
 };
 

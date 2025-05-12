@@ -25,7 +25,6 @@ export function clearTokens() {
                 activeTokens.delete(userId);
             }
         };
-        console.log('CLEAR TOKENS:', activeTokens);
     }, 60000);
 }
 

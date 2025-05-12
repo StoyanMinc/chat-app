@@ -5,7 +5,7 @@ import { getAuthContext } from "../context/UserContext";
 
 export default function Chat() {
 
-    const { authData } = getAuthContext();
+    const { authData, chooseFriend } = getAuthContext();
     const createMessage = useCreateMessage();
     const friend = useGetUser(authData.friendId);
     const messages = useGetChatMessages(authData.userId, authData.friendId);
@@ -59,8 +59,13 @@ export default function Chat() {
         setMessageContent(prev => ({ ...prev, image: '' }));
     }
 
+    const goBackHandler = () => {
+        chooseFriend('', '');
+    }
+
     return (
-        <div className="chat">
+        <div className={`chat ${(authData.friendId) ? 'show-chat' : null}`}>
+            <div className="go-back" onClick={goBackHandler}></div>
             <div className="chat-header">
                 <div className="user-info">
                     <img src={friend.profilePic || "../assets/avatar.avif"} alt="user-image" />
@@ -77,17 +82,17 @@ export default function Chat() {
                            ${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'user' : 'friend'}`}
                         >
                             {/* {message.message && */}
-                                <p className="text-message">
-                                    {`${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'Me' : authData.friendUsername}: ${message.message}`}
-                                </p>
+                            <p className="text-message">
+                                {`${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'Me' : authData.friendUsername}: ${message.message}`}
+                            </p>
                             {/* } */}
                             {/* {message.image && */}
-                                {/* <div className="text-image-holder"> */}
-                                    {/* <img className="text-image">
+                            {/* <div className="text-image-holder"> */}
+                            {/* <img className="text-image">
                                         {`${(message.senderId._id === authData.userId || message.senderId === authData.userId) ? 'Me' : authData.friendUsername}:`}
                                     </p> */}
-                                   {message.image &&  <img className="sended-image" src={message.image} alt="image" />}
-                                {/* </div> */}
+                            {message.image && <img className="sended-image" src={message.image} alt="image" />}
+                            {/* </div> */}
 
                             {/* } */}
 

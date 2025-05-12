@@ -1,0 +1,34 @@
+@media (max-width: 768px) {
+    .menu-bar {
+        width: 100%;
+    }
+
+    .chat {
+        position: absolute;
+        right: -999px;
+    }
+
+    .show-chat {
+        right: 0
+    }
+
+    .page {
+        position: relative;
+    }
+
+    .chat-header {
+        justify-content: center;
+    }
+
+    .go-back {
+        width: 18px;
+        height: 18px;
+        background-image: url(../assets/back.svg);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
+}
