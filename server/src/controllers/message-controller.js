@@ -9,6 +9,11 @@ export const createMessage = async (req, res) => {
     const messageData = req.body;
     try {
         if(messageData.image) {
+            const regex = /^data:image\/(png|jpeg|jpg|gif|webp);base64,i/;
+            if(!regex.test(messageData.image)) {
+                return res.status(400).json({error: 'Invalid image format'});
+            }
+
             const uploadedPic = await cloudinary.uploader.upload(messageData.image);
             messageData.image = uploadedPic.secure_url;
         }

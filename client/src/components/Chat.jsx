@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCreateMessage, useGetChatMessages } from "../hooks/useMessages";
 import { useGetUser } from "../hooks/useUsers";
 import { getAuthContext } from "../context/UserContext";
+import toast from "react-hot-toast";
 
 export default function Chat() {
 
@@ -47,6 +48,11 @@ export default function Chat() {
         if (!file) {
             return
         }
+
+        if(!file.type.startsWith('image/')) {
+            return toast.error('You can send only images!')
+        } 
+
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
